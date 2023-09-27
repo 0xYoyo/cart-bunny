@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "name": "Cart Bunny",
+  "description": "This is a Chrome extension designed to help online shoppers",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Cart Bunny",
+    "default_icon": "bunnyLogo.png"
+  },
+  "permissions": ["scripting", "geolocation"],
+  "icons": {
+    "16": "bunnyLogo.png",
+    "32": "bunnyLogo.png",
+    "48": "bunnyLogo.png",
+    "128": "bunnyLogo.png"
+  }
+}
