@@ -11,6 +11,36 @@ const findBestCart = (originalCart, minCart, maxCart) => {
       validItems.push(item);
     }
   }
+  // Edge cases
+  if (validItems.length === 0) {
+    if (invalidExtras.length === 0) {
+      return {
+        validCarts: [],
+        invalidCarts: [],
+      };
+    }
+    if (invalidExtras.length > 0) {
+      return {
+        validCarts: [],
+        invalidCarts: [invalidExtras],
+      };
+    }
+  }
+  if (validItems.length === 1) {
+    if (invalidExtras.length === 0) {
+      return {
+        validCarts: [validItems],
+        invalidCarts: [],
+      };
+    }
+    if (invalidExtras.length > 0) {
+      return {
+        validCarts: [validItems],
+        invalidCarts: [invalidExtras],
+      };
+    }
+  }
+
   const allCombinations = partition(validItems);
   // Map through the partitions and transform them into objects with more information
   const objCombinations = allCombinations.map((combination) => {
@@ -92,6 +122,7 @@ export { findBestCart };
 //   minCart,
 //   maxCart
 // );
+console.log(findBestCart([111], 40, 75));
 
 // console.log(`The best valid carts distribution is: `);
 // console.log(validCarts);
