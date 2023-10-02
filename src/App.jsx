@@ -38,22 +38,26 @@ function App() {
       <h1>Cart Bunny</h1>
       <div className="card">
         <div className="minmax">
-          <label htmlFor="minCart">Min:</label>
-          <input
-            type="number"
-            id="minCart"
-            name="minCart"
-            ref={minCartRef}
-            required
-          />
-          <label htmlFor="maxCart">Max:</label>
-          <input
-            type="number"
-            id="maxCart"
-            name="maxCart"
-            ref={maxCartRef}
-            required
-          />
+          <div>
+            <label htmlFor="minCart">Min</label>
+            <input
+              type="number"
+              id="minCart"
+              name="minCart"
+              ref={minCartRef}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="maxCart">Max</label>
+            <input
+              type="number"
+              id="maxCart"
+              name="maxCart"
+              ref={maxCartRef}
+              required
+            />
+          </div>
         </div>
         <form ref={formRef}>
           <input
@@ -81,7 +85,9 @@ function App() {
               {validCarts.map((cart, index) => {
                 return (
                   <li key={uuidv4()}>
-                    <strong>Cart {index + 1}:</strong> {cart.join(", ")}
+                    <p>
+                      <strong>Cart {index + 1}:</strong> {cart.join(", ")}
+                    </p>
                   </li>
                 );
               })}
@@ -97,7 +103,9 @@ function App() {
               {invalidCarts.map((cart, index) => {
                 return (
                   <li key={uuidv4()}>
-                    <strong>Cart {index + 1}:</strong> {cart.join(", ")}
+                    <p>
+                      <strong>Cart {index + 1}:</strong> {cart.join(", ")}
+                    </p>
                   </li>
                 );
               })}
