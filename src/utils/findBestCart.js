@@ -81,18 +81,20 @@ const findBestCart = (originalCart, minCart, maxCart) => {
   };
 };
 
-const minCart = 40;
-const maxCart = 75;
-const originalCart = [30, 25, 45, 10, 60, 17, 13];
-// const something = [60, 5, 7, 7, 75, 77];
-const { validCarts, invalidCarts } = findBestCart(
-  originalCart,
-  minCart,
-  maxCart
-);
+export { findBestCart };
 
-console.log(`The best valid carts distribution is: `);
-console.log(validCarts);
-invalidCarts.length
-  ? console.log("Could not fit the following items: " + invalidCarts)
-  : console.log("All items distributed successfully!");
+// const minCart = 40;
+// const maxCart = 75;
+// const originalCart = [30, 25, 45, 10, 60, 17, 13];
+// // const something = [60, 5, 7, 7, 75, 77];
+// const { validCarts, invalidCarts } = findBestCart(
+//   originalCart,
+//   minCart,
+//   maxCart
+// );
+
+// console.log(`The best valid carts distribution is: `);
+// console.log(validCarts);
+// invalidCarts.length
+//   ? console.log("Could not fit the following items: " + invalidCarts)
+//   : console.log("All items distributed successfully!");

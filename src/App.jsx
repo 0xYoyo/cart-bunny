@@ -1,33 +1,113 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useRef, useState } from "react";
+import logo from "./assets/bunnyLogo.png";
 import "./styles/App.css";
+import { findBestCart } from "./utils/findBestCart";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [items, setItems] = useState([]);
+  const addItemRef = useRef(null);
+  const formRef = useRef(null);
+  const minCartRef = useRef(null);
+  const maxCartRef = useRef(null);
+  const [validCarts, setValidCarts] = useState([]);
+  const [invalidCarts, setInvalidCarts] = useState([]);
+
+  function addItem(e) {
+    e.preventDefault();
+    const newItem = parseInt(addItemRef.current.value);
+    if (newItem > 0 && !isNaN(newItem)) {
+      setItems((prevItems) => [...prevItems, parseInt(newItem)]);
+    }
+    formRef.current.reset();
+  }
+
+  function calcCart() {
+    const minCart = parseInt(minCartRef.current.value);
+    const maxCart = parseInt(maxCartRef.current.value);
+    const { validCarts, invalidCarts } = findBestCart(items, minCart, maxCart);
+    setValidCarts(validCarts);
+    setInvalidCarts(invalidCarts);
+  }
 
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <img src={logo} className="logo" alt="Bunny logo" />
       </div>
       <h1>Cart Bunny</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <div className="minmax">
+          <label htmlFor="minCart">Min:</label>
+          <input
+            type="number"
+            id="minCart"
+            name="minCart"
+            ref={minCartRef}
+            required
+          />
+          <label htmlFor="maxCart">Max:</label>
+          <input
+            type="number"
+            id="maxCart"
+            name="maxCart"
+            ref={maxCartRef}
+            required
+          />
+        </div>
+        <form ref={formRef}>
+          <input
+            type="number"
+            id="addItem"
+            name="addItem"
+            ref={addItemRef}
+            required
+          />
+          <button onClick={addItem}>Add item</button>
+        </form>
+        {items.length > 0 ? (
+          <div>
+            <h4>Original cart: </h4>
+            <p>{items.join(", ")}</p>
+          </div>
+        ) : (
+          ""
+        )}
+        <button onClick={calcCart}>Calculate best cart split</button>
+        {validCarts.length > 0 ? (
+          <div>
+            <h4>Valid carts: </h4>
+            <ul>
+              {validCarts.map((cart, index) => {
+                return (
+                  <li key={uuidv4()}>
+                    <strong>Cart {index + 1}:</strong> {cart.join(", ")}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : (
+          ""
+        )}
+        {invalidCarts.length > 0 ? (
+          <div>
+            <h4>Invalid carts: </h4>
+            <ul>
+              {invalidCarts.map((cart, index) => {
+                return (
+                  <li key={uuidv4()}>
+                    <strong>Cart {index + 1}:</strong> {cart.join(", ")}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <p className="read-the-docs">Save money. Cart bunny.</p>
     </>
   );
 }
